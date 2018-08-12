@@ -1,0 +1,448 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- ====================================================================== -->
+    <!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
+    <!-- ====================================================================== -->
+
+    <groupId>com.ford.aem</groupId>
+    <artifactId>ford-web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>ford AEM Project - Reactor Project</name>
+    <description>ford AEM Project.</description>
+
+    <prerequisites>
+        <maven>3.0.2</maven>
+    </prerequisites>
+
+    <!-- ====================================================================== -->
+    <!-- P R O P E R T I E S -->
+    <!-- ====================================================================== -->
+    <properties>
+        <apps.folder.path>ford</apps.folder.path>
+        <client.name>ford</client.name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss.SSSS</maven.build.timestamp.format>
+        <timezone.offset>-05:00</timezone.offset>
+        <build.time>${maven.build.timestamp}${timezone.offset}</build.time>
+         <!-- SonarQube Settings -->
+        <sonar.scm.disabled>true</sonar.scm.disabled>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+        <sonar.test.exclusions>test/**</sonar.test.exclusions>
+        <!-- 
+        <sonar.javascript.mode>skip</sonar.javascript.mode>
+        <sonar.css.mode>skip</sonar.css.mode>
+        -->
+    </properties>
+
+	<scm>
+		<connection>scm:git:git://stash.vmlapps.com/somePath</connection>
+		<developerConnection>scm:git:git://stash.vmlapps.com/somePath</developerConnection>
+		<url>http://stash.vmlapps.com/somePath</url>
+	</scm>
+	
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.2</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>[2.2.1,)</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <message>
+                                            Project must be compiled with Java 7 or higher
+                                        </message>
+                                        <version>1.7.0</version>
+                                    </requireJavaVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <delimiters>
+                            <delimiter>@</delimiter>
+                        </delimiters>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.1</version>
+                   <configuration>
+						<preparationGoals>clean install</preparationGoals>
+						<goals>deploy</goals>
+						<providerImplementations>
+							<svn>javasvn</svn>
+						</providerImplementations>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+							<artifactId>maven-scm-provider-svnjava</artifactId>
+							<version>2.1.1</version>
+						</dependency>
+					</dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-scr-plugin</artifactId>
+                    <version>1.20.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>2.5.3</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.sling</groupId>
+                    <artifactId>maven-sling-plugin</artifactId>
+                    <version>2.1.0</version>
+                    <configuration>
+                        <user>${crx.username}</user>
+                        <password>${crx.password}</password>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.day.jcr.vault</groupId>
+                    <artifactId>content-package-maven-plugin</artifactId>
+                    <version>0.0.24</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <failOnError>true</failOnError>
+                        <username>${crx.username}</username>
+                        <password>${crx.password}</password>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <configuration>
+                        <excludePackageNames>
+                            *.impl
+                        </excludePackageNames>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>javadoc</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.2</version>
+                    <configuration>
+                        <linkXRef>false</linkXRef>
+                        <targetJdk>1.7</targetJdk>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.12.1</version>
+                    <configuration>
+                        <linkXRef>false</linkXRef>
+                        <includeResources>false</includeResources>
+                        <includeTestResources>false</includeTestResources>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.7.1.201405082137</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jslint-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>jslint</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <sourceJsFolder>src/main/content/jcr_root</sourceJsFolder>
+                        <failOnIssues>true</failOnIssues>
+                        <predefinedVars>jQuery,window,$</predefinedVars>
+                        <excludes>
+                            <exclude>**/extensions/**/*.js</exclude>
+                            <exclude>**/vendor/**/*.js</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                
+				<!-- Maven SCM Plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>1.8.1</version>
+					<configuration>
+						<providerImplementations>
+							<svn>javasvn</svn>
+						</providerImplementations>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+							<artifactId>maven-scm-provider-svnjava</artifactId>
+							<version>2.1.1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- JavaX -->
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.jcr</groupId>
+                <artifactId>jcr</artifactId>
+                <version>2.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>2.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+			    <groupId>javax.mail</groupId>
+			    <artifactId>mail</artifactId>
+			    <version>1.5.0-b01</version>
+			    <scope>provided</scope>
+			</dependency>
+
+            <!-- Felix/Sling -->
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.core</artifactId>
+                <version>4.3.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.osgi</groupId>
+                <artifactId>org.osgi.compendium</artifactId>
+                <version>4.3.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.scr.annotations</artifactId>
+                <version>1.9.8</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.sling</groupId>
+                <artifactId>org.apache.sling.scripting.jsp.taglib</artifactId>
+                <version>2.2.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>biz.aQute.bnd</groupId>
+                <artifactId>annotation</artifactId>
+                <version>2.3.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- AEM -->
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-api</artifactId>
+                <version>6.0.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.day.commons</groupId>
+                <artifactId>day-commons-jstl</artifactId>
+                <version>1.1.4</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.day.cq.wcm</groupId>
+                <artifactId>cq-wcm-taglib</artifactId>
+                <version>5.6.4</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <dependency>
+				<groupId>com.day.commons.osgi.wrapper</groupId>
+				<artifactId>com.day.commons.osgi.wrapper.commons-email</artifactId>
+				<version>1.2.0-0002</version>
+				<scope>provided</scope>
+			</dependency>
+
+            <!-- Apache Commons -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.4</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.5</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.6</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- ACS Commons -->
+            <dependency>
+                <groupId>com.adobe.acs</groupId>
+                <artifactId>acs-aem-commons-bundle</artifactId>
+                <version>1.9.2</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit-addons</groupId>
+                <artifactId>junit-addons</artifactId>
+                <version>1.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.7.6</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>3.0.0</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            
+            
+            <dependency>
+            	<groupId>org.apache.servicemix.bundles</groupId>
+            	<artifactId>org.apache.servicemix.bundles.twitter4j</artifactId>
+            	<version>4.0.2_1</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+                <scope>provided</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>VML Artifactory Repository</name>
+            <url>https://jenkins.vmldev.com/artifactory/libs-release-local/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>VML Artifactory Repository</name>
+            <url>https://jenkins.vmldev.com/artifactory/libs-snapshot-local/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <modules>
+        <module>bundle</module>
+        <module>content</module>
+    </modules>
+</project>

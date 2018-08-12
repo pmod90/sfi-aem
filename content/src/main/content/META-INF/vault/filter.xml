@@ -1,0 +1,13 @@
+<workspaceFilter version="1.0">
+<filter root="/apps/ford">
+<exclude pattern="/apps/ford/config*"/>
+<exclude pattern="/apps/ford/config.*"/>
+</filter>
+<filter root="/apps/sling/servlet/errorhandler"/>
+<filter root="/etc/clientlibs/ford"/>
+<!-- These are added to force delete generated files. -->
+<filter root="/var/clientlibs/etc/clientlibs/ford"/>
+<filter root="/var/clientlibs/apps/ford"/>
+<filter root="/var/classes/org/apache/jsp/apps/ford"/>
+<filter root="/var/classes/sightly"/>
+</workspaceFilter>
