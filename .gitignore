@@ -5,7 +5,7 @@
 **/content/target
 ## **/content/src/main/content/jcr_root/etc/clientlibs/shop_ford/sfi/dist
 **/content/src/main/content/jcr_root/etc/designs/shop_ford/sfi/clientlibs/dist
-**/bundle/target
+**/bundle/target/*
 **/bundle-install/target
 **/.classpath
 **/content/dll-manifest-lock.json
@@ -18,3 +18,4 @@ npm-debug.log
 **/.vlt
 **/testcontent/**
 **/content/coverage/
+bundle/target/*
