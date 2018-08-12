@@ -33,12 +33,19 @@
         <sonar.scm.disabled>true</sonar.scm.disabled>
         <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
         <sonar.test.exclusions>test/**</sonar.test.exclusions>
+
         <!-- 
         <sonar.javascript.mode>skip</sonar.javascript.mode>
         <sonar.css.mode>skip</sonar.css.mode>
         -->
+               <aem.scheme>http</aem.scheme>
+        <aem.host>localhost</aem.host>
+        <aem.port>4502</aem.port>
+        <aem.portpub>4503</aem.portpub>
+        <aem.user>admin</aem.user>
+        <aem.password>admin</aem.password>
     </properties>
-
+     
 	<scm>
 		<connection>scm:git:git://stash.vmlapps.com/somePath</connection>
 		<developerConnection>scm:git:git://stash.vmlapps.com/somePath</developerConnection>
