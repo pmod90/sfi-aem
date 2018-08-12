@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1534036337108
+Bnd-LastModified: 1534037377936
 Build-Jdk: 1.8.0_91
 Built-By: parthmody
 Bundle-Activator: com.ford.aem.Activator
@@ -17,7 +17,7 @@ Embed-Dependency: *;scope=compile|runtime
 Embedded-Artifacts: org.apache.servicemix.bundles.twitter4j-4.0.2_1.jar;
  g="org.apache.servicemix.bundles";a="org.apache.servicemix.bundles.twit
  ter4j";v="4.0.2_1",jsoup-1.8.2.jar;g="org.jsoup";a="jsoup";v="1.8.2"
-Export-Package: com.ford.aem;uses:="org.osgi.framework";version="0.0.1"
+Export-Package: com.ford.aem;version="0.0.1";uses:="org.osgi.framework"
 Import-Package: javax.crypto,javax.crypto.spec,javax.management,javax.ma
  nagement.openmbean,javax.net.ssl,javax.xml.parsers,javax.xml.transform,
  javax.xml.transform.dom,javax.xml.transform.stream,org.apache.commons.l
