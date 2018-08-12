@@ -8,3 +8,5 @@ lazybones create aem 0.0.1 sfi-aem -Pgroup=com.ford.sfi -Pversion=0.0.1 -Pprojec
 PLUS 
 
 parent pom ref fixed
+
+on this commit mvn package works!
