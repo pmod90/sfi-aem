@@ -18,5 +18,5 @@ npm-debug.log
 **/.vlt
 **/testcontent/**
 **/content/coverage/
-/bundle/target/*
+bundle/target/*
 *.jar

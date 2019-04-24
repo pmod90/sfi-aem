@@ -207,11 +207,6 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <properties>
-                <aem.scheme>${env.AEM_SCHEME}</aem.scheme>
-                <aem.host>${env.AEM_HOST}</aem.host>
-                <aem.port>${env.AEM_PORT}</aem.port>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
