@@ -10,3 +10,6 @@ PLUS
 parent pom ref fixed
 
 on this commit mvn package works!
+
+maven command for deploying : 
+mvn clean install -PautoInstallPackage -Pdeploy-package -Pdeploy-bundle 
